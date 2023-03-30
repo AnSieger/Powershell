@@ -6,20 +6,20 @@ Helpfull Powershell scripts
 When an account loose the Exchange license, the account is still visible in the Global Address List (GAL).
 With this Powershell script all users without an Exchange license will be hidden:
 
-'''
+```
 Connect-ExchangeOnline
 Connect-AzureAD
-'''
+```
 
 ### Get all user who are in the GAL
  
-'''
+```
 $GALUsers = Get-Recipient -RecipientTypeDetails UserMailbox -ResultSize Unlimited | Where-Object { $_.HiddenFromAddressListsEnabled -eq $false }
 $GALUsers | Format-Table DisplayName, PrimarySmtpAddress, Alias
-'''
+```
 
 ### Hide users without license or blocked:
-'''
+```
 # Get all user mailboxes
 $AllUsers = Get-Recipient -RecipientTypeDetails UserMailbox -ResultSize Unlimited
 
@@ -34,4 +34,4 @@ foreach ($User in $AllUsers) {
         Write-Host "User $($User.DisplayName) hide in Global Addresslist."
     }
 }
-'''
+```
