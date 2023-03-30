@@ -54,3 +54,10 @@ Get-MsolUser -EnabledFilter EnabledOnly -MaxResults 2000 | Where-Object { $_.IsL
     }
 }
 ```
+
+## Export List with all AAD Users with Manager/Supervisor
+```
+Get-AzureADUser -All $true -Filter "AccountEnabled eq true" |
+Select-Object GivenName , Surname, DisplayName, UserPrincipalName, Department, JobTitle, Mobile, TelephoneNumber, @{label="Manager";expression={(Get-AzureADUserManager -ObjectId $_.ObjectID).displayname}} |
+Export-Csv -Encoding UTF8 C:\Users\<YOUR NAME>\Downloads\export.csv
+```
